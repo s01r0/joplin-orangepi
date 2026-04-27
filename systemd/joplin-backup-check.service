@@ -1,0 +1,9 @@
+[Unit]
+Description=Check Joplin backup health
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/alert-on-fail.sh /usr/local/sbin/check-joplin-backup.sh
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=joplin-backup-check

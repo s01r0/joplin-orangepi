@@ -1,0 +1,9 @@
+[Unit]
+Description=Check Joplin Server health (HTTP)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/check-joplin-server.sh
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=joplin-server-check
