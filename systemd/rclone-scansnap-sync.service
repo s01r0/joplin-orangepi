@@ -1,0 +1,16 @@
+[Unit]
+Description=Sync ScanSnap PDFs from Google Drive to inbox
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+ExecStart=/usr/bin/rclone move gdrive:ScanSnap/inbox /srv/scansnap/inbox/ \
+  --log-file=/srv/scansnap/logs/rclone.log \
+  --log-level INFO \
+  --no-update-modtime
+
+[Install]
+WantedBy=multi-user.target
