@@ -291,7 +291,55 @@ sudo install -m 0644 systemd/scansnap-to-joplin.service /etc/systemd/system/
 sudo install -m 0644 systemd/scansnap-to-joplin.timer   /etc/systemd/system/
 ```
 
-### 5-2. Joplin CLI認証設定
+### 5-2. rclone インストール・Google Drive 認証
+
+```bash
+sudo apt install -y rclone
+```
+
+OrangePi5 はヘッドレスのため `rclone config` の対話フローは使えない。Windows でトークンを取得し設定ファイルを直接作成する。
+
+**Windows側**（rclone 未インストールなら `winget install Rclone.Rclone`）:
+
+```powershell
+rclone authorize "drive"
+# ブラウザで認証 → {"access_token":...} のJSONトークンをコピー
+```
+
+**OrangePi5側**:
+
+```bash
+mkdir -p ~/.config/rclone
+cat > ~/.config/rclone/rclone.conf << 'EOF'
+[gdrive]
+type = drive
+scope = drive
+token = ここにコピーしたJSONトークンを貼り付け
+EOF
+```
+
+動作確認とフォルダパスの確認：
+
+```bash
+# 実際のフォルダ名を確認（大文字・小文字を区別する）
+rclone ls gdrive:ScanSnap/Inbox
+```
+
+> **注意:** Google Drive のフォルダ名は大文字・小文字を区別する。
+> ScanSnap Home で設定したフォルダ名は環境によって異なるため、`rclone ls gdrive:` で確認し、
+> `systemd/rclone-scansnap-sync.service` の `gdrive:` パスを自分の環境に合わせて修正すること。
+
+### 5-3. rclone 同期タイマー有効化
+
+```bash
+sudo install -m 0644 systemd/rclone-scansnap-sync.service /etc/systemd/system/
+sudo install -m 0644 systemd/rclone-scansnap-sync.timer   /etc/systemd/system/
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now rclone-scansnap-sync.timer
+```
+
+### 5-4. Joplin CLI 認証設定・取り込みタイマー有効化
 
 ```bash
 npm install -g joplin
@@ -301,11 +349,7 @@ joplin config sync.10.path     "http://orangepi5.local:22300"
 joplin config sync.10.username "<JoplinのメールID>"
 joplin config sync.10.password "<Joplinパスワード>"
 joplin sync
-```
 
-### 5-3. タイマー有効化
-
-```bash
 sudo systemctl daemon-reload
 sudo systemctl enable --now scansnap-to-joplin.timer
 
@@ -314,10 +358,11 @@ sudo systemctl start scansnap-to-joplin.service
 tail -f /srv/scansnap/logs/scansnap_to_joplin.log
 ```
 
-### 5-4. ScanSnapの保存先設定（Windows）
+### 5-5. ScanSnap Home の設定（Windows）
 
-ScanSnap Home → プロファイル設定 → 保存先を `\\orangepi5\scansnap\inbox\` に設定。
-（Sambaの共有設定が別途必要な場合は `02_joplin-server.md` を参照）
+1. ScanSnap Home → プロファイル設定 → 対象プロファイルを選択
+2. 保存先クラウド: **Google Drive** → フォルダ `ScanSnap/inbox`
+3. Windows タスクスケジューラの転送タスクは**削除**（rclone が代替するため不要）
 
 ---
 
