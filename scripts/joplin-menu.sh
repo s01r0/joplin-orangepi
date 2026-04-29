@@ -13,7 +13,7 @@ SYSTEMD_SERVICES=(
 )
 
 ALL_LOG_SERVICES=(
-  "docker:joplin-server"        "Joplin Server (Docker)"
+  "docker:joplin"               "Joplin Server (Docker)"
   "joplin-backup.timer"         "バックアップ"
   "joplin-backup-check.timer"   "バックアップ整合性チェック"
   "joplin-server-check.timer"   "Joplin Server 監視"
@@ -26,10 +26,10 @@ show_status() {
   local output=""
 
   # Docker コンテナ
-  if docker ps --format '{{.Names}}' 2>/dev/null | grep -q "^joplin-server$"; then
-    output+="[稼働中] Docker: joplin-server\n"
+  if docker ps --format '{{.Names}}' 2>/dev/null | grep -q "^joplin$"; then
+    output+="[稼働中] Docker: joplin\n"
   else
-    output+="[停止  ] Docker: joplin-server\n"
+    output+="[停止  ] Docker: joplin\n"
   fi
   output+="\n"
 
