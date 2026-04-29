@@ -7,7 +7,7 @@ After=network-online.target
 Type=oneshot
 User=ubuntu
 Group=ubuntu
-ExecStart=/usr/bin/rclone move gdrive:ScanSnap/inbox /srv/scansnap/inbox/ \
+ExecStart=/usr/bin/rclone move gdrive:ScanSnap/Inbox /srv/scansnap/inbox/ \
   --log-file=/srv/scansnap/logs/rclone.log \
   --log-level INFO \
   --no-update-modtime
