@@ -73,8 +73,8 @@ host smtp.gmail.com
 port 465
 protocol smtp
 auth on
-user s01r0.fjmt@gmail.com
-from s01r0.fjmt@gmail.com
+user your-email@gmail.com
+from your-email@gmail.com
 password <Googleアプリパスワード>
 tls on
 tls_starttls off
@@ -93,7 +93,7 @@ chmod 600 ~/.msmtprc
 ### テスト送信
 
 ```bash
-echo "Test mail from OrangePi5" | msmtp -a gmail s01r0.fjmt@gmail.com
+echo "Test mail from OrangePi5" | msmtp -a gmail your-email@gmail.com
 ```
 
 ---

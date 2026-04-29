@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SERVER_IP="${SERVER_IP:-192.168.0.13}"
+SERVER_IP="${SERVER_IP:?SERVER_IP environment variable is not set}"
 BASE="http://${SERVER_IP}:22300"
 URL="${BASE}/"
 

@@ -4,7 +4,7 @@
 # 使い方: alert-on-fail.sh <command> [args...]
 set -euo pipefail
 
-MAIL_TO="s01r0.fjmt@gmail.com"
+MAIL_TO="${ALERT_MAIL_TO:?ALERT_MAIL_TO environment variable is not set}"
 MSMTPRC="/home/ubuntu/.msmtprc"
 SUBJECT_PREFIX="[Joplin監視]"
 

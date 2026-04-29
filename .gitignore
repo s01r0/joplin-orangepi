@@ -1,0 +1,5 @@
+.claude/
+docker/.env
+docker/.env.joplin
+*.env
+!*.env.example
