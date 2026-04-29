@@ -55,7 +55,7 @@ show_status() {
   # 最終バックアップ
   output+="\n"
   local last_bk
-  last_bk=$(sudo ls -t /var/backups/joplin/*.gz 2>/dev/null | head -1 || true)
+  last_bk=$(sudo bash -c 'ls -t /var/backups/joplin/joplindb_*.sql.gz 2>/dev/null | head -1' || true)
   if [ -n "$last_bk" ]; then
     output+="最終バックアップ: $(basename "$last_bk")"
   else
