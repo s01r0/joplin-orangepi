@@ -55,8 +55,12 @@ show_status() {
   # 最終バックアップ
   output+="\n"
   local last_bk
-  last_bk=$(ls -t /var/backups/joplin/*.gz 2>/dev/null | head -1 || echo "(なし)")
-  output+="最終バックアップ: $(basename "$last_bk" 2>/dev/null || echo "(なし)")"
+  last_bk=$(sudo ls -t /var/backups/joplin/*.gz 2>/dev/null | head -1 || true)
+  if [ -n "$last_bk" ]; then
+    output+="最終バックアップ: $(basename "$last_bk")"
+  else
+    output+="最終バックアップ: (なし)"
+  fi
 
   whiptail --title "サーバー状態" --msgbox "$(printf '%b' "$output")" 22 65
 }
