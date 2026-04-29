@@ -79,8 +79,8 @@ PC・スマホの Joplin アプリからいつでも参照・検索
 ### 1. リポジトリを取得
 
 ```bash
-git clone https://github.com/s01r0/soi-channel.git
-cd soi-channel/projects/202508_Joplin_orangepi
+git clone https://github.com/s01r0/joplin-orangepi.git
+cd joplin-orangepi
 ```
 
 ### 2. 環境変数ファイルを作成
@@ -164,5 +164,5 @@ git push origin main    # GitHub
 git push orangepi main  # OrangePi5
 
 # OrangePi5 側で反映
-ssh orangepi5 "cd ~/joplin-orangepi/projects/202508_Joplin_orangepi && git pull"
+ssh orangepi5 "cd ~/joplin-orangepi && git pull"
 ```

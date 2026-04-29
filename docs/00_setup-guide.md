@@ -204,8 +204,8 @@ curl -i http://orangepi5.local:22300/api/ping
 
 ```bash
 # このリポジトリをOrangePi5上でclone
-git clone https://github.com/s01r0/soi-channel.git ~/soi-channel
-cd ~/soi-channel/projects/202508_Joplin_orangepi
+git clone https://github.com/s01r0/joplin-orangepi.git ~/joplin-orangepi
+cd ~/joplin-orangepi
 
 # 環境変数ファイル配置（IPアドレス・メールアドレスを実際の値に書き換えてから実行）
 sudo mkdir -p /etc/joplin
